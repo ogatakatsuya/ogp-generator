@@ -4,7 +4,8 @@
   "description": "This is ogp generator function deployed to AWS Lambda.",
   "main": "app.ts",
   "scripts": {
-    "build": "esbuild src/app.ts --bundle --minify --sourcemap --platform=node --target=es2020 --outfile=dist/app.js --external:canvas"
+    "build": "esbuild src/app.ts --bundle --minify --sourcemap --platform=node --target=es2020 --outfile=dist/app.js --external:canvas",
+    "test": "node dist/app.js"
   },
   "author": "",
   "license": "ISC",

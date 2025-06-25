@@ -21,7 +21,7 @@ export const uploadToR2 = async (file: Buffer, bucketName: string, fileName: str
       })
     );
 
-    const uploadedUrl = `https://storage.r2.ogatakatsuya.com/${fileName}.png`;
+    const uploadedUrl = `https://${process.env.R2_CUSTOM_DOMAIN}/${fileName}.png`;
 
     return uploadedUrl;
   } catch (error) {
