@@ -16,6 +16,7 @@
     "typescript": "^5.8.3"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.835.0",
     "canvas": "^3.1.1"
   }
 }
