@@ -1,6 +1,6 @@
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3'
 
-export const uploadToR2 = async (file: File, bucketName: string, fileName: string): Promise<string | undefined> => {
+export const uploadToR2 = async (file: Buffer, bucketName: string, fileName: string): Promise<string | undefined> => {
   try {
     const s3 = new S3Client({
       region: "auto",
@@ -14,8 +14,8 @@ export const uploadToR2 = async (file: File, bucketName: string, fileName: strin
     await s3.send(
       new PutObjectCommand({
         Bucket: bucketName,
-        Key: fileName,
-        ContentType: file.type,
+        Key: fileName + '.png',
+        ContentType: 'image/png',
         Body: file,
         ACL: "public-read",
       })

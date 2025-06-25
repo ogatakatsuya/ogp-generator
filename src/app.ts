@@ -37,9 +37,7 @@ export const handler = async (event: Request): Promise<Response> => {
   try {
     const generatedImage = await generateOgImage(event.title, event.tags);
 
-    const file = new File([generatedImage], `${event.title}.png`, { type: "image/png" });
-
-    const url = await uploadToR2(file, "me-ogp", event.title);
+    const url = await uploadToR2(generatedImage, "me-ogp", event.title);
 
     return {
       statusCode: 200,

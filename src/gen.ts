@@ -58,7 +58,7 @@ export const generateOgImage = async (title: string, tags?: string[]): Promise<B
 
     for (const tag of tags) {
       const tagText = `#${tag}`
-      ctx.fillText(tagText, tagX, tagY, 130)
+      ctx.fillText(tagText, tagX, tagY)
       const tagWidth = ctx.measureText(tagText).width
       tagX += tagWidth + tagGap
     }
