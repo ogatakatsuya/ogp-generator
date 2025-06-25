@@ -1,9 +1,8 @@
 import { Logger } from "@aws-lambda-powertools/logger";
-import { writeFile } from "fs/promises";
-import { join } from "path";
 
 import type { Request, Response } from "./type";
 import { generateOgImage } from "./gen";
+import { uploadToR2 } from "./upload";
 
 const logger = new Logger({ serviceName: "ogp-generator" });
 
@@ -38,14 +37,13 @@ export const handler = async (event: Request): Promise<Response> => {
   try {
     const generatedImage = await generateOgImage(event.title, event.tags);
 
-    const safeTitle = event.title.replace(/[^a-z0-9_\-]/gi, "_");
-    const filePath = join(__dirname, "../assets", `${safeTitle}.png`);
+    const file = new File([generatedImage], `${event.title}.png`, { type: "image/png" });
 
-    await writeFile(filePath, generatedImage);
+    const url = await uploadToR2(file, "me-ogp", event.title);
 
     return {
       statusCode: 200,
-      message: "Image generated and saved successfully",
+      message: `Image generated and uploaded successfully: ${url}`,
     };
   } catch (error) {
     logger.error("Error generating image", { error });
