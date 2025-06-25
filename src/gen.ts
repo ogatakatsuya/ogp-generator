@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import { createCanvas, registerFont, loadImage } from 'canvas'
-import { size, getH } from './lib'
+import { size, getH, wrapText } from './lib'
 
 const current = process.cwd()
 
@@ -18,16 +18,24 @@ export const generateOgImage = async (title: string, tags?: string[]): Promise<B
 
   ctx.drawImage(image, 0, 0, width, height)
 
-  // タイトルのフォントサイズを大きくする
   ctx.font = '64px "NotoSansJP"'
   ctx.textAlign = 'center'
   ctx.fillStyle = '#000000'
 
-  const lines = title.replace('\\n', '\n').split('\n')
-  const maxWidth = 500
+  const maxWidth = 1000
   const w = width / 2
+
+  let lines: string[] = []
+  for (const rawLine of title.replace('\\n', '\n').split('\n')) {
+    lines.push(...wrapText(ctx, rawLine, maxWidth))
+  }
   const sum = lines.length
-  const write = (text: string, h: number) => {
+  const lineHeight = 80
+  const centerY = height / 2
+  const totalTextHeight = lineHeight * sum
+  const startY = centerY - (totalTextHeight / 2) + (lineHeight / 2)
+  const write = (text: string, i: number) => {
+    const h = startY + i * lineHeight
     ctx.fillText(text, w, h, maxWidth)
   }
 
@@ -35,11 +43,9 @@ export const generateOgImage = async (title: string, tags?: string[]): Promise<B
     throw new Error(`Invalid lines: ${sum}`)
   }
 
-  for (const [i, line] of Object.entries(lines)) {
-    const currentLineNumber = Number(i) + 1
-    const h = getH(sum, currentLineNumber)
-    write(line, h)
-  }
+  lines.forEach((line, i) => {
+    write(line, i)
+  })
 
   if (tags && tags.length > 0) {
     ctx.font = '24px "NotoSansJP"'
@@ -47,11 +53,14 @@ export const generateOgImage = async (title: string, tags?: string[]): Promise<B
     ctx.fillStyle = '#666666'
 
     const tagY = height - 80
-    const tagX = 50
+    let tagX = 50
+    const tagGap = 20
 
-    for (const [i, tag] of tags.entries()) {
-      const xPosition = tagX + (i * 80)
-      ctx.fillText(`#${tag}`, xPosition, tagY, 130)
+    for (const tag of tags) {
+      const tagText = `#${tag}`
+      ctx.fillText(tagText, tagX, tagY, 130)
+      const tagWidth = ctx.measureText(tagText).width
+      tagX += tagWidth + tagGap
     }
   }
 

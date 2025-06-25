@@ -19,3 +19,21 @@ export const getH = (sum: number, current: number) => {
 
   return base + additionalHeight * current
 }
+
+export const wrapText = (ctx: any, text: string, maxWidth: number): string[] => {
+  const words = text.split(' ')
+  const lines: string[] = []
+  let line = ''
+  for (let n = 0; n < words.length; n++) {
+    const testLine = line ? line + ' ' + words[n] : words[n]
+    const metrics = ctx.measureText(testLine)
+    if (metrics.width > maxWidth && line) {
+      lines.push(line)
+      line = words[n]
+    } else {
+      line = testLine
+    }
+  }
+  if (line) lines.push(line)
+  return lines
+}

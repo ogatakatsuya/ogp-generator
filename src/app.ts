@@ -38,11 +38,9 @@ export const handler = async (event: Request): Promise<Response> => {
   try {
     const generatedImage = await generateOgImage(event.title, event.tags);
 
-    // ファイル名をタイトルから生成（安全なファイル名に変換）
     const safeTitle = event.title.replace(/[^a-z0-9_\-]/gi, "_");
     const filePath = join(__dirname, "../assets", `${safeTitle}.png`);
 
-    // 画像データをassetsに保存（generatedImageがBufferの場合）
     await writeFile(filePath, generatedImage);
 
     return {
@@ -59,6 +57,6 @@ export const handler = async (event: Request): Promise<Response> => {
 };
 
 handler({
-  title: "GitHub ActionsとAWS LambdaでCI/CDを実現する",
+  title: "AWS LambdaとGitHub ActionsでOG画像を自動生成してみた",
   tags: ["GitHub", "AWS", "CI/CD"]
 });
