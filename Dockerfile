@@ -11,6 +11,8 @@ RUN npm run build
 
 FROM public.ecr.aws/lambda/nodejs:22
 
-COPY --from=base /usr/app/* ./
+COPY --from=base /usr/app/dist/* ./
+COPY --from=base /usr/app/node_modules ./node_modules
+COPY --from=base /usr/app/assets ./assets
 
 CMD ["dist/app.handler"]
