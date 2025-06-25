@@ -55,8 +55,3 @@ export const handler = async (event: Request): Promise<Response> => {
     };
   }
 };
-
-handler({
-  title: "AWS LambdaとGitHub ActionsでOG画像を自動生成してみた",
-  tags: ["GitHub", "AWS", "CI/CD"]
-});
