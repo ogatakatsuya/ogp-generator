@@ -16,5 +16,5 @@ const logger = new Logger({ serviceName: "ogp-generator" });
  */
 export const handler = async (event: Object, context: Object) => {
   logger.info("Processing event", { event });
-  return { message: "Hello World" };
+  return { message: "Hello AWS Lambda!" };
 };
