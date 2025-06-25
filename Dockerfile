@@ -11,9 +11,6 @@ RUN npm run build
 
 FROM public.ecr.aws/lambda/nodejs:22
 
-COPY --from=base /usr/app/dist/* ./
+COPY --from=base /usr/app/* ./
 
-COPY package.json package-lock.json ./
-RUN npm install --omit=dev
-
-CMD ["app.handler"]
+CMD ["dist/app.handler"]
