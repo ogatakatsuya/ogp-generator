@@ -1,3 +1,6 @@
+import { Theme, ImagePath } from "./type"
+import { imageMap } from "./const"
+
 export const size = { width: 1200, height: 630 }
 
 const getBase = (sum: number) => {
@@ -36,4 +39,11 @@ export const wrapText = (ctx: any, text: string, maxWidth: number): string[] => 
   }
   if (line) lines.push(line)
   return lines
+}
+
+export const getImagePath = (theme?: Theme): ImagePath => {
+  if (!theme) {
+    return imageMap.default;
+  }
+  return imageMap[theme];
 }

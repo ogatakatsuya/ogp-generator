@@ -35,7 +35,7 @@ export const handler = async (event: Request): Promise<Response> => {
   }
 
   try {
-    const generatedImage = await generateOgImage(event.title, event.tags);
+    const generatedImage = await generateOgImage(event.title, event.tags, event.theme || "default");
 
     const url = await uploadToR2(generatedImage, "me-ogp", event.title);
 
