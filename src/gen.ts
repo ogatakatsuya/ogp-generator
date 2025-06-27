@@ -24,13 +24,13 @@ export const generateOgImage = async (title: string, tags?: string[], theme?: Th
   ctx.textAlign = 'left'
   ctx.fillStyle = '#000000'
 
-  const maxWidth = 1000
+  const maxWidth = 900
   const startX = 80
   const startY = 150
 
   let lines: string[] = []
   for (const rawLine of title.replace('\\n', '\n').split('\n')) {
-    lines.push(...wrapText(ctx, rawLine, maxWidth))
+    lines.push(...wrapText(ctx, rawLine))
   }
   const sum = lines.length
   const lineHeight = 100
@@ -39,7 +39,7 @@ export const generateOgImage = async (title: string, tags?: string[], theme?: Th
     ctx.fillText(text, startX, h, maxWidth)
   }
 
-  if (sum === 0 || sum > 3) {
+  if (sum === 0 || sum > 4) {
     throw new Error(`Invalid lines: ${sum}`)
   }
 
