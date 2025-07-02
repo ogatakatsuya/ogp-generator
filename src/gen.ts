@@ -40,7 +40,7 @@ export const generateOgImage = async (title: string, tags?: string[], theme?: Th
   }
 
   if (sum === 0 || sum > 4) {
-    throw new Error(`Invalid lines: ${sum}`)
+    throw new Error(`Too long title: ${sum} lines`)
   }
 
   lines.forEach((line, i) => {
@@ -56,7 +56,7 @@ export const generateOgImage = async (title: string, tags?: string[], theme?: Th
     let tagX = 80
     const tagGap = 20
 
-    for (const tag of tags) {
+    for (const tag of tags.slice(0, 2)) {
       const tagText = `#${tag}`
       ctx.fillText(tagText, tagX, tagY)
       const tagWidth = ctx.measureText(tagText).width
