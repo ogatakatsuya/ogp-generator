@@ -1,9 +1,9 @@
 import type { ImagePath, Theme } from "./type"
 
 export const imageMap: Record<Theme, ImagePath> = {
-  tech: "assets/base-gray.png",
-  idea: "assets/base-blue.png",
-  diary: "assets/base-ash.png",
-  info: "assets/base-green.png",
-  default: "assets/base-brown.png",
+  gray: "assets/base-gray.png",
+  blue: "assets/base-blue.png",
+  beige: "assets/base-beige.png",
+  green: "assets/base-green.png",
+  brown: "assets/base-brown.png",
 }

@@ -9,5 +9,5 @@ export type Response = {
     message: string;
 }
 
-export type Theme = "tech" | "idea" | "diary" | "info" | "default";
+export type Theme = "blue" | "gray" | "beige" | "green" | "brown";
 export type ImagePath = string;
