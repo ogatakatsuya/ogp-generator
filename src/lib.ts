@@ -24,7 +24,7 @@ export const getH = (sum: number, current: number) => {
   return base + additionalHeight * current
 }
 
-export const wrapText = (ctx: CanvasRenderingContext2D, text: string, maxWidth: number = 900): string[] => {
+export const wrapText = (ctx: CanvasRenderingContext2D, text: string, maxWidth: number = 1040): string[] => {
   const lines: string[] = []
   const words = text.split('')
   let currentLine = ''

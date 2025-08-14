@@ -24,7 +24,7 @@ export const generateOgImage = async (title: string, tags?: string[], theme?: Th
   ctx.textAlign = 'left'
   ctx.fillStyle = '#000000'
 
-  const maxWidth = 900
+  const maxWidth = 1040
   const startX = 80
   const startY = 150
 
@@ -65,21 +65,4 @@ export const generateOgImage = async (title: string, tags?: string[], theme?: Th
   }
 
   return canvas.toBuffer('image/png')
-}
-
-// Test function to demonstrate usage
-const testGeneration = async () => {
-  const buffer1 = await generateOgImage(
-    'これはテストタイトルです。長めのタイトルで改行のテストを行います。',
-    ['JavaScript', 'TypeScript'],
-    'blue'
-  );
-  
-  // You can add more test logic here if needed
-  console.log('OG image generated successfully');
-}
-
-// Run the test if this file is executed directly
-if (require.main === module) {
-  testGeneration().catch(console.error);
 }
