@@ -1,5 +1,6 @@
 import { Theme, ImagePath } from "./type"
 import { imageMap } from "./const"
+import { CanvasRenderingContext2D } from 'canvas'
 
 export const size = { width: 1200, height: 630 }
 
@@ -23,14 +24,27 @@ export const getH = (sum: number, current: number) => {
   return base + additionalHeight * current
 }
 
-export const wrapText = (_ctx: any, text: string): string[] => {
-  const MAX_LENGTH = 20
+export const wrapText = (ctx: CanvasRenderingContext2D, text: string, maxWidth: number = 900): string[] => {
   const lines: string[] = []
-  let i = 0
-  while (i < text.length) {
-    lines.push(text.slice(i, i + MAX_LENGTH))
-    i += MAX_LENGTH
+  const words = text.split('')
+  let currentLine = ''
+
+  for (const char of words) {
+    const testLine = currentLine + char
+    const metrics = ctx.measureText(testLine)
+    
+    if (metrics.width > maxWidth && currentLine.length > 0) {
+      lines.push(currentLine)
+      currentLine = char
+    } else {
+      currentLine = testLine
+    }
   }
+  
+  if (currentLine.length > 0) {
+    lines.push(currentLine)
+  }
+  
   return lines
 }
 

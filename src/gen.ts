@@ -30,7 +30,7 @@ export const generateOgImage = async (title: string, tags?: string[], theme?: Th
 
   let lines: string[] = []
   for (const rawLine of title.replace('\\n', '\n').split('\n')) {
-    lines.push(...wrapText(ctx, rawLine))
+    lines.push(...wrapText(ctx, rawLine, maxWidth))
   }
   const sum = lines.length
   const lineHeight = 100
@@ -65,4 +65,21 @@ export const generateOgImage = async (title: string, tags?: string[], theme?: Th
   }
 
   return canvas.toBuffer('image/png')
+}
+
+// Test function to demonstrate usage
+const testGeneration = async () => {
+  const buffer1 = await generateOgImage(
+    'これはテストタイトルです。長めのタイトルで改行のテストを行います。',
+    ['JavaScript', 'TypeScript'],
+    'blue'
+  );
+  
+  // You can add more test logic here if needed
+  console.log('OG image generated successfully');
+}
+
+// Run the test if this file is executed directly
+if (require.main === module) {
+  testGeneration().catch(console.error);
 }
